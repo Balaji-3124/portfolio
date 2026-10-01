@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Phudu:wght@300..900&display=swap");
+
+:root {
+  font-family: "Instrument Sans", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: clip;
+  margin: 0;
+  min-width: 320px;
+  background: #ffffff;
+}
+
+/* =========================================================
+   SCROLL REVEAL
+   Add data-reveal="up|left|right|fade" (+ optional
+   data-reveal-delay="200") to any element. Handled by
+   src/hooks/useScrollReveal.js
+========================================================= */
+
+html.reveal-ready [data-reveal] {
+  opacity: 0;
+  will-change: opacity, transform;
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+}
+
+html.reveal-ready [data-reveal="up"] {
+  transform: translateY(40px);
+}
+
+html.reveal-ready [data-reveal="left"] {
+  transform: translateX(-60px);
+}
+
+html.reveal-ready [data-reveal="right"] {
+  transform: translateX(60px);
+}
+
+html.reveal-ready [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+@media (max-width: 900px) {
+  html.reveal-ready [data-reveal="left"],
+  html.reveal-ready [data-reveal="right"] {
+    transform: translateY(40px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -1,0 +1,1325 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,380;0,9..144,500;1,9..144,440&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+
+/* =========================================================
+   DESIGN TOKENS
+========================================================= */
+
+.journey-section {
+  --jb-bg: #ffffff;
+  --jb-bg-2: #ffffff;
+
+  --jb-ink: #1c1c1a;
+  --jb-ink-dim: rgba(28, 28, 26, 0.62);
+  --jb-ink-faint: rgba(28, 28, 26, 0.38);
+  --jb-line: rgba(28, 28, 26, 0.12);
+
+  --jb-amber: #d96b32;
+  --jb-amber-soft: #b95320;
+  --jb-amber-dim: rgba(217, 107, 50, 0.14);
+
+  --jb-road: #111111;
+  --jb-road-dark: #000000;
+
+  --jb-serif: "Fraunces", Georgia, serif;
+  --jb-sans: "Manrope", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+
+/* =========================================================
+   JOURNEY SECTION
+========================================================= */
+
+.journey-section {
+  position: relative;
+
+  width: 100%;
+
+  height: clamp(
+    700px,
+    calc(100vh - 88px),
+    850px
+    );
+  padding: 20px 5vw 45px;
+
+  overflow: hidden;
+
+  isolation: isolate;
+
+  scroll-margin-top: 88px;
+
+  /* Centers the zoomed-out wrapper below within the fixed
+     section height, so shrinking it doesn't leave a gap at
+     the bottom. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at 78% 30%,
+      rgba(217, 107, 50, 0.07),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 15% 85%,
+      rgba(80, 100, 120, 0.05),
+      transparent 36%
+    ),
+    linear-gradient(
+      180deg,
+      var(--jb-bg) 0%,
+      var(--jb-bg-2) 100%
+    );
+
+  color: var(--jb-ink);
+
+  font-family: var(--jb-sans);
+}
+
+
+.journey-wrapper {
+  position: relative;
+
+  width: 100%;
+
+  max-width: 1500px;
+
+  margin: 0 auto;
+
+  /* "Zoom out" on desktop — everything (road, car, signals,
+     detail card) scales down together as one block, so the
+     JS math (which measures pre-transform pixel sizes) and
+     every absolute-positioned child stay perfectly aligned.
+     Cancelled on tablet/mobile below, which already have
+     their own hand-tuned compact sizing. */
+  transform: scale(0.85);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.journey-intro {
+  position: absolute;
+
+  top: -10px;
+  left: -60px;
+
+  z-index: 20;
+
+  animation:
+    journeyRise
+    0.7s
+    cubic-bezier(0.2, 0.7, 0.2, 1)
+    both;
+}
+
+
+.journey-small-title {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 18px;
+
+  padding: 6px 14px 6px 10px;
+
+  border: 1px solid rgba(255, 159, 64, 0.28);
+
+  border-radius: 999px;
+
+  background: rgba(255, 159, 64, 0.07);
+
+  font-family: var(--jb-serif);
+
+  font-style: italic;
+
+  font-size: 13px;
+
+  font-weight: 400;
+
+  letter-spacing: 0.01em;
+
+  color: var(--jb-amber-soft);
+}
+
+
+.journey-small-title span {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: var(--jb-amber);
+
+  box-shadow:
+    0 0 10px 2px
+    rgba(255, 159, 64, 0.55);
+}
+
+
+.journey-intro h2 {
+  margin: 0;
+
+  font-family: var(--jb-sans);
+
+  font-size: clamp(46px, 5.2vw, 78px);
+
+  line-height: 0.95;
+
+  font-weight: 700;
+
+  letter-spacing: -0.03em;
+
+  color: var(--jb-ink);
+}
+
+
+.journey-intro h2 em {
+  color: var(--jb-amber);
+
+  font-family: var(--jb-serif);
+
+  font-style: italic;
+
+  font-weight: 440;
+
+  letter-spacing: -0.01em;
+}
+
+
+.journey-intro p {
+  margin-top: 20px;
+
+  max-width: 300px;
+
+  font-size: 14px;
+
+  line-height: 1.65;
+
+  color: var(--jb-ink-dim);
+}
+
+
+/* =========================================================
+   MAIN JOURNEY
+========================================================= */
+
+.journey-main {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 650px;
+}
+
+
+/* =========================================================
+   ROAD
+========================================================= */
+
+.journey-road-container {
+  position: absolute;
+
+  left: 20%;
+
+  top: 0;
+
+  width: 56%;
+
+  height: 650px;
+
+  z-index: 3;
+}
+
+
+.journey-road-svg {
+  width: 100%;
+  height: 100%;
+
+  overflow: visible;
+
+  display: block;
+}
+
+
+/* =========================================================
+   ROAD SHADOW
+========================================================= */
+
+.road-shadow {
+  fill: none;
+
+  stroke: rgba(0, 0, 0, 0.5);
+
+  stroke-width: 96;
+
+  stroke-linecap: round;
+
+  filter: blur(10px);
+
+  stroke-dasharray: 1;
+
+  stroke-dashoffset: 1;
+
+  animation:
+    roadDraw
+    1.6s
+    cubic-bezier(0.65, 0, 0.3, 1)
+    0.15s
+    both;
+}
+
+
+/* =========================================================
+   MAIN ROAD
+========================================================= */
+
+.road {
+  fill: none;
+
+  stroke: var(--jb-road);
+
+  stroke-width: 125;
+
+  stroke-linecap: round;
+
+  filter:
+    drop-shadow(
+      0 10px 16px
+      rgba(0, 0, 0, 0.4)
+    );
+
+  stroke-dasharray: 1;
+
+  stroke-dashoffset: 1;
+
+  animation:
+    roadDraw
+    1.6s
+    cubic-bezier(0.65, 0, 0.3, 1)
+    0.15s
+    both;
+}
+
+
+/* =========================================================
+   ROAD CENTER
+========================================================= */
+
+.road-center {
+  fill: none;
+
+  stroke: rgba(255, 255, 255, 0.55);
+
+  stroke-width: 2.5;
+
+  stroke-dasharray: 16 16;
+
+  stroke-linecap: round;
+
+  opacity: 0;
+
+  animation:
+    journeyFadeIn
+    0.5s
+    ease
+    1.5s
+    both;
+}
+
+
+/* =========================================================
+   ROAD ANIMATIONS
+========================================================= */
+
+@keyframes roadDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+@keyframes journeyFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+
+@keyframes journeyRise {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+/* =========================================================
+   JOURNEY CAR (3D GLB, rendered with three.js)
+
+   The canvas is sized to exactly match the road container in
+   pixels. Camera is orthographic and top-down, so the car's
+   world (x, z) position lines up 1:1 with the 2D road path —
+   position/rotation are driven from React via
+   requestAnimationFrame whenever the active stage changes.
+========================================================= */
+
+.journey-car-canvas {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 12;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  animation:
+    journeyCarIn
+    0.5s
+    ease
+    1.6s
+    both;
+}
+
+
+@keyframes journeyCarIn {
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   TRAFFIC SIGNAL LAYER
+
+   IMPORTANT:
+
+   Position comes from React calculated SVG coordinates.
+========================================================= */
+
+.journey-signal-layer {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 15;
+
+  pointer-events: auto;
+}
+
+
+/* =========================================================
+   TRAFFIC SIGNAL
+
+   left/top are dynamically supplied from JSX.
+========================================================= */
+
+.journey-signal {
+  position: absolute;
+
+  width: 30px;
+  height: 86px;
+
+  z-index: 15;
+
+  transform:
+    translate(-50%, -100%);
+
+  transform-origin: center center;
+
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* =========================================================
+   SIGNAL BODY
+========================================================= */
+
+.signal-body {
+  position: absolute;
+
+  left: 50%;
+
+  top: 0;
+
+  width: 26px;
+
+  height: 62px;
+
+  padding: 5px 4px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  box-sizing: border-box;
+
+  border: 2px solid #171717;
+
+  border-radius: 7px;
+
+  background: #292929;
+
+  transform:
+    translateX(-50%);
+
+  box-shadow:
+    0 5px 10px
+      rgba(0, 0, 0, 0.28),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   SIGNAL LIGHTS
+========================================================= */
+
+.signal-light {
+  width: 10px;
+
+  height: 10px;
+
+  flex: 0 0 10px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.18);
+
+  box-sizing: border-box;
+}
+
+
+.signal-light.red {
+  background: #e54848;
+
+  box-shadow:
+    0 0 7px
+    rgba(229, 72, 72, 0.7);
+}
+
+
+.signal-light.yellow {
+  background: #f3bd32;
+
+  box-shadow:
+    0 0 7px
+    rgba(243, 189, 50, 0.6);
+}
+
+
+.signal-light.green {
+  background: #4eaf68;
+
+  box-shadow:
+    0 0 7px
+    rgba(78, 175, 104, 0.6);
+}
+
+
+/* =========================================================
+   SIGNAL POLE
+========================================================= */
+
+.signal-pole {
+  position: absolute;
+
+  left: 50%;
+
+  top: 61px;
+
+  width: 3px;
+
+  height: 22px;
+
+  background: #222;
+
+  transform:
+    translateX(-50%);
+}
+
+
+/* =========================================================
+   SIGNAL FOOT
+========================================================= */
+
+.signal-foot {
+  position: absolute;
+
+  left: 50%;
+
+  bottom: 0;
+
+  width: 19px;
+
+  height: 5px;
+
+  border-radius: 3px;
+
+  background: #171717;
+
+  transform:
+    translateX(-50%);
+}
+
+/* =========================================================
+   SIGNAL MESSAGE CLOUD
+
+   Small stage summary attached to every traffic signal.
+   Only year, title and subtitle are shown here.
+========================================================= */
+
+.signal-message {
+  position: absolute;
+  top: 31px;
+  width: 210px;
+  min-height: 86px;
+  padding: 14px 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.97);
+  color: var(--jb-ink);
+  text-align: left;
+  z-index: 20;
+  pointer-events: auto;
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(50, 43, 35, 0.13), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.signal-message-gloss {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  right: 10px;
+  height: 28px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+.signal-message small {
+  position: relative;
+  font-family: var(--jb-serif);
+  font-size: 9px;
+  line-height: 1.2;
+  color: var(--jb-ink-faint);
+}
+
+.signal-message strong {
+  position: relative;
+  font-family: var(--jb-sans);
+  font-size: 14px;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--jb-ink);
+}
+
+.signal-message > span:not(.signal-message-gloss) {
+  position: relative;
+  font-size: 9px;
+  line-height: 1.3;
+  color: var(--jb-ink-dim);
+}
+
+.signal-message-left {
+  right: 65px;
+  transform: translateY(-50%);
+}
+
+.signal-message-left::after {
+  content: "";
+  position: absolute;
+  right: -22px;
+  top: 50%;
+  width: 0;
+  height: 0;
+
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-left: 22px solid rgba(255, 255, 255, 0.97);
+
+  transform: translateY(-50%);
+  filter: drop-shadow(2px 2px 2px rgba(50, 43, 35, 0.14));
+}
+
+.signal-message-right {
+  left: 65px;
+  transform: translateY(-50%);
+}
+
+.signal-message-right::after {
+  content: "";
+  position: absolute;
+  left: -22px;
+  top: 50%;
+  width: 0;
+  height: 0;
+
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-right: 22px solid rgba(255, 255, 255, 0.97);
+
+  transform: translateY(-50%);
+  filter: drop-shadow(-2px 2px 2px rgba(50, 43, 35, 0.14));
+}
+
+.journey-signal.active .signal-message {
+  box-shadow: 0 16px 34px rgba(50, 43, 35, 0.18), 0 0 0 2px rgba(217, 107, 50, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  filter: brightness(1.01);
+}
+
+@media (max-width: 1100px) {
+  .signal-message { width: 190px; min-height: 78px; padding: 12px 14px; }
+  .signal-message strong { font-size: 12.5px; }
+  .signal-message-left { right: 14px; }
+  .signal-message-right { left: 21px; }
+}
+
+@media (max-width: 768px) {
+  .signal-message { width: 160px; min-height: 70px; padding: 10px 11px; border-radius: 16px; }
+  .signal-message small { font-size: 7.5px; }
+  .signal-message strong { font-size: 10.5px; }
+  .signal-message > span:not(.signal-message-gloss) { font-size: 7.5px; }
+  .signal-message-left { right: 18px; }
+  .signal-message-right { left: 18px; }
+}
+
+@media (max-width: 480px) {
+  .signal-message { width: 135px; min-height: 62px; padding: 8px 9px; border-radius: 14px; }
+  .signal-message small { font-size: 6.5px; }
+  .signal-message strong { font-size: 9px; }
+  .signal-message > span:not(.signal-message-gloss) { font-size: 6.5px; }
+}
+
+
+/* =========================================================
+   ACTIVE SIGNAL
+========================================================= */
+
+.journey-signal.active {
+  filter:
+    drop-shadow(
+      0 0 8px
+      rgba(217, 107, 50, 0.55)
+    );
+
+  transform:
+    translate(-50%, -100%)
+    scale(1.12);
+}
+
+
+/* =========================================================
+   DETAIL CARD
+========================================================= */
+
+.journey-detail {
+  position: absolute;
+
+  right: -25px;
+
+  bottom: 50px;
+
+  width: 360px;
+
+  z-index: 30;
+}
+
+
+.journey-detail-card {
+  position: relative;
+  right: -80px;
+  padding: 26px;
+
+  border:
+    1px solid
+    var(--jb-line);
+
+  border-radius: 20px;
+
+  background:
+    rgba(255, 253, 248, 0.94);
+
+  box-shadow:
+    0 24px 60px
+      rgba(50, 43, 35, 0.13),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.7);
+
+  backdrop-filter: blur(18px);
+
+  animation:
+    journeyDetailIn
+    0.4s
+    cubic-bezier(0.2, 0.7, 0.2, 1)
+    both;
+}
+
+
+@keyframes journeyDetailIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.detail-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+}
+
+
+.detail-year {
+  font-family: var(--jb-serif);
+
+  font-style: italic;
+
+  font-size: 14px;
+
+  font-weight: 400;
+
+  color: var(--jb-amber);
+}
+
+
+.detail-counter {
+  font-size: 10px;
+
+  font-variant-numeric:
+    tabular-nums;
+
+  color: var(--jb-ink-faint);
+}
+
+
+/* =========================================================
+   CARD CONTENT
+========================================================= */
+
+.detail-subtitle {
+  margin-bottom: 8px;
+
+  font-size: 11px;
+
+  color: var(--jb-ink-dim);
+}
+
+
+.journey-detail-card h3 {
+  margin: 0;
+
+  font-family: var(--jb-sans);
+
+  font-size: 29px;
+
+  line-height: 1.05;
+
+  font-weight: 700;
+
+  letter-spacing: -0.025em;
+
+  color: var(--jb-ink);
+}
+
+
+.detail-line {
+  width: 30px;
+
+  height: 2px;
+
+  margin: 18px 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--jb-amber),
+      transparent
+    );
+}
+
+
+.journey-detail-card p {
+  margin: 0;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+
+  color: var(--jb-ink-dim);
+}
+
+
+/* =========================================================
+   TAGS
+========================================================= */
+
+.detail-tags {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  margin-top: 18px;
+}
+
+
+.detail-tags span {
+  padding: 6px 11px;
+
+  border:
+    1px solid
+    var(--jb-line);
+
+  border-radius: 30px;
+
+  background:
+    rgba(28, 28, 26, 0.035);
+
+  font-size: 10.5px;
+
+  color: var(--jb-ink-dim);
+}
+
+
+/* =========================================================
+   CARD BOTTOM
+========================================================= */
+
+.detail-bottom {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-top: 20px;
+
+  padding-top: 15px;
+
+  border-top:
+    1px solid
+    var(--jb-line);
+}
+
+
+.detail-bottom > span {
+  font-family: var(--jb-serif);
+
+  font-style: italic;
+
+  font-size: 11px;
+
+  color: var(--jb-ink-faint);
+}
+
+
+.detail-arrows {
+  display: flex;
+
+  gap: 6px;
+}
+
+
+.detail-arrows button {
+  width: 32px;
+
+  height: 32px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border:
+    1px solid
+    var(--jb-line);
+
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: var(--jb-ink);
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease;
+}
+
+
+.detail-arrows button:hover {
+  background:
+    var(--jb-amber);
+
+  border-color:
+    var(--jb-amber);
+
+  color: #fff;
+
+  transform:
+    translateY(-1px);
+}
+
+/* =========================================================
+   NAVBAR SAFETY
+========================================================= */
+
+.journey-section,
+.journey-wrapper {
+  isolation: isolate;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .journey-intro,
+  .road-shadow,
+  .road,
+  .road-center,
+  .journey-car-canvas,
+  .journey-detail-card {
+    animation: none !important;
+
+    opacity: 1 !important;
+
+    stroke-dashoffset: 0 !important;
+
+    transform: none !important;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .journey-section {
+    padding-top: 70px;
+    display: block;
+  }
+
+
+  .journey-wrapper {
+    transform: none;
+  }
+
+
+  .journey-intro {
+    position: relative;
+
+    top: auto;
+
+    left: auto;
+
+    margin-bottom: 35px;
+  }
+
+
+  .journey-main {
+    min-height: calc(69vw + 40px);
+  }
+
+
+  .journey-road-container {
+    left: 0;
+
+    width: 69%;
+
+    height: auto;
+
+    aspect-ratio: 1 / 1;
+  }
+
+
+  .journey-detail {
+    width: 330px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .journey-section {
+    min-height: auto;
+
+    padding:
+      70px 20px 80px;
+
+    scroll-margin-top: 85px;
+  }
+
+
+  .journey-intro {
+    margin-bottom: 25px;
+  }
+
+
+  .journey-small-title {
+    font-size: 11px;
+  }
+
+
+  .journey-intro h2 {
+    font-size: 50px;
+  }
+
+
+  .journey-intro p {
+    margin-top: 17px;
+
+    font-size: 12px;
+  }
+
+
+  .journey-main {
+    /* Road height now always equals its own (95vw-ish) width
+       via aspect-ratio below, so this has to grow with it
+       instead of using one fixed number for every phone
+       size. ~340px covers the detail card + gap beneath it. */
+    min-height: calc(95vw + 340px);
+  }
+
+
+  /* ROAD
+     aspect-ratio keeps height equal to width at every screen
+     size, so the square (700×700) road SVG never gets
+     stretched or squished — it did when height was a fixed
+     px value paired with a % width. */
+
+  .journey-road-container {
+    top: 0;
+
+    left: 5%;
+
+    width: 95%;
+
+    height: auto;
+
+    aspect-ratio: 1 / 1;
+  }
+
+
+  .road-shadow {
+    stroke-width: 82;
+  }
+
+
+  .road {
+    stroke-width: 68;
+  }
+
+
+  .road-center {
+    stroke-width: 2.2;
+
+    stroke-dasharray: 12 12;
+  }
+
+
+  /* SIGNAL */
+
+  .journey-signal {
+    width: 26px;
+
+    height: 76px;
+
+    transform:
+      translate(-50%, -100%)
+      scale(0.82);
+  }
+
+
+  .journey-signal.active {
+    transform:
+      translate(-50%, -100%)
+      scale(0.92);
+  }
+
+
+  .signal-body {
+    width: 23px;
+
+    height: 55px;
+  }
+
+
+  .signal-light {
+    width: 8px;
+
+    height: 8px;
+
+    flex-basis: 8px;
+  }
+
+
+  .signal-pole {
+    top: 54px;
+
+    height: 19px;
+  }
+
+
+  /* DETAIL */
+
+  .journey-detail {
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 0;
+
+    width: 100%;
+  }
+
+
+  .journey-detail-card {
+    padding: 22px;
+  }
+
+
+  .journey-detail-card h3 {
+    font-size: 27px;
+  }
+
+
+  .journey-detail-card p {
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .journey-section {
+    padding-top: 60px;
+  }
+
+
+  .journey-intro h2 {
+    font-size: 44px;
+  }
+
+
+  .journey-main {
+    /* Same reasoning as the 768px breakpoint: road height
+       tracks its own 100vw-ish width now. */
+    min-height: calc(100vw + 320px);
+  }
+
+
+  .journey-road-container {
+    left: 0;
+
+    width: 100%;
+
+    height: auto;
+
+    aspect-ratio: 1 / 1;
+  }
+
+
+  .journey-detail-card {
+    padding: 20px;
+  }
+
+
+  .journey-detail-card h3 {
+    font-size: 24px;
+  }
+
+
+  .detail-bottom > span {
+    display: none;
+  }
+
+
+  .journey-signal {
+    transform:
+      translate(-50%, -100%)
+      scale(0.72);
+  }
+
+
+  .journey-signal.active {
+    transform:
+      translate(-50%, -100%)
+      scale(0.82);
+  }
+}

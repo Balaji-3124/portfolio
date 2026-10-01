@@ -1,0 +1,1300 @@
+/* =========================================================
+   ABOUT SECTION
+========================================================= */
+
+.about-section {
+  position: relative;
+  width: 100%;
+
+  /*
+    Navbar already takes 88px.
+    So About itself occupies the remaining viewport.
+  */
+  height: clamp(
+    700px,
+    calc(100vh - 88px),
+    850px
+    );
+  padding: 0 7%;
+  
+  overflow: hidden;
+  
+  background: #ffffff;
+
+  scroll-margin-top: 88px;
+}
+
+
+/* =========================================================
+   MAIN WRAPPER
+========================================================= */
+
+.about-wrapper {
+  width: 100%;
+  max-width: 1350px;
+
+  /* min-height: calc(100vh - 88px); */
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.4fr)
+    minmax(0, 0.8fr);
+
+  /*
+    IMPORTANT:
+    Do NOT vertically center the scene.
+
+    Rope must start from the top of About,
+    immediately after navbar.
+  */
+  align-items: start;
+
+  gap: 60px;
+}
+
+
+/* =========================================================
+   ABOUT CONTENT
+========================================================= */
+
+.about-content {
+  position: relative;
+  z-index: 2;
+
+  /*
+    Original content spacing.
+  */
+  padding-top: 40px;
+}
+
+
+.about-label {
+  display: inline-block;
+
+  margin-bottom: 18px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  color: #777777;
+}
+
+
+.about-title {
+  margin: 0 0 28px;
+
+  font-size: clamp(
+    42px,
+    5vw,
+    72px
+  );
+
+  line-height: 0.95;
+
+  letter-spacing: -3px;
+
+  font-weight: 800;
+
+  color: #111111;
+}
+
+
+.about-title span {
+  color: #ff4d00;
+}
+
+
+.about-description {
+  max-width: 700px;
+
+  margin: 0 0 25px;
+
+  font-size: 17px;
+
+  line-height: 1.8;
+
+  color: #666666;
+}
+
+
+.about-description strong {
+  color: #111111;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   ABOUT DETAILS
+========================================================= */
+
+.about-details {
+  display: grid;
+
+  grid-template-columns:
+    minmax(100px, 0.8fr)
+    minmax(100px, 0.8fr)
+    minmax(120px, 1fr);
+
+  gap: 12px;
+
+  max-width: 700px;
+
+  margin-top: 30px;
+}
+
+
+.about-detail {
+  padding: 15px 14px;
+
+  border: 1px solid #e9e9e9;
+
+  border-radius: 12px;
+
+  background: #fafafa;
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+
+.about-detail:hover {
+  transform: translateY(-4px);
+
+  border-color: #ff4d00;
+
+  background: #ffffff;
+}
+
+
+.about-detail small {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.3px;
+
+  text-transform: uppercase;
+
+  color: #999999;
+}
+
+
+.about-detail strong {
+  font-size: 14px;
+
+  color: #171717;
+}
+
+
+/* =========================================================
+   CARD AREA
+========================================================= */
+
+.card-area {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 620px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: flex-start;
+}
+
+
+/* =========================================================
+   SCENE
+========================================================= */
+
+.scene {
+  position: relative;
+
+  width: 430px;
+
+  max-width: 100%;
+
+  height: 620px;
+}
+
+
+/* =========================================================
+   ROPE
+========================================================= */
+
+.rope-layer {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  overflow: visible;
+
+  pointer-events: none;
+
+  z-index: 5;
+}
+
+
+.rope {
+  fill: none;
+
+  stroke: url(#ropeGradient);
+
+  stroke-width: 12;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+
+  filter:
+    drop-shadow(
+      0 6px 8px rgba(0, 0, 0, 0.18)
+    );
+}
+
+
+.rope-highlight {
+  fill: none;
+
+  stroke:
+    rgba(255, 255, 255, 0.45);
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+
+  stroke-dasharray: 1.5 5;
+
+  opacity: 0.8;
+}
+
+
+.rope-texture {
+  fill: none;
+
+  stroke:
+    rgba(0, 0, 0, 0.25);
+
+  stroke-width: 1.6;
+
+  stroke-linecap: round;
+
+  stroke-dasharray: 2.5 4.5;
+
+  opacity: 0.85;
+}
+
+
+/* =========================================================
+   METAL CLIP
+========================================================= */
+
+.clip {
+  position: absolute;
+
+  width: 26px;
+
+  height: 36px;
+
+  margin-left: -13px;
+
+  margin-top: -6px;
+
+  z-index: 9;
+
+  pointer-events: none;
+
+  transform-origin: 50% 0%;
+}
+
+
+.clip-ring {
+  position: absolute;
+
+  top: 0;
+
+  left: 50%;
+
+  width: 16px;
+
+  height: 16px;
+
+  margin-left: -8px;
+
+  border: 3px solid #c6c6c6;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #f4f4f4,
+      #9c9c9c 70%
+    );
+
+  box-shadow:
+    inset
+      0 1px 2px
+      rgba(0, 0, 0, 0.4),
+
+    0 2px 3px
+      rgba(0, 0, 0, 0.2);
+}
+
+
+.clip-body {
+  position: absolute;
+
+  top: 12px;
+
+  left: 50%;
+
+  width: 22px;
+
+  height: 26px;
+
+  margin-left: -11px;
+
+  border-radius: 5px;
+
+  background:
+    linear-gradient(
+      100deg,
+      #6a6a6a 0%,
+      #e8e8e8 22%,
+      #fdfdfd 45%,
+      #b6b6b6 72%,
+      #5f5f5f 100%
+    );
+
+  box-shadow:
+    inset
+      0 0 3px
+      rgba(0, 0, 0, 0.4),
+
+    0 3px 6px
+      rgba(0, 0, 0, 0.2);
+}
+
+
+.clip-body::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+
+  top: 8px;
+
+  width: 12px;
+
+  height: 6px;
+
+  margin-left: -6px;
+
+  border-radius: 2px;
+
+  background: #5a5a5a;
+
+  box-shadow:
+    inset
+      0 1px 2px
+      rgba(0, 0, 0, 0.4);
+}
+
+
+/* =========================================================
+   ID CARD
+========================================================= */
+
+/* .card {
+  position: absolute;
+
+  left: 50%;
+
+  top: 190px;
+
+  width: 272px;
+
+  height: 368px;
+
+  transform:
+    translateX(-50%)
+    translateY(0)
+    rotate(0deg);
+
+  transform-origin: top center;
+
+  background: #ffffff;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 35px 60px
+      rgba(0, 0, 0, 0.18),
+
+    0 10px 20px
+      rgba(0, 0, 0, 0.12),
+
+    0 0 0 1px
+      rgba(0, 0, 0, 0.05);
+
+  cursor: grab;
+
+  user-select: none;
+
+  touch-action: none;
+
+  z-index: 10;
+
+  will-change: transform;
+}
+
+
+.card:active {
+  cursor: grabbing;
+} */
+
+.card {
+  position: absolute;
+  left: 50%;
+  top: 160px;
+
+  width: 294px;
+  height: 380px;
+
+  transform:
+    translateX(-50%)
+    translateY(0)
+    rotate(0deg);
+
+  transform-origin: top center;
+
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+
+  box-shadow:
+    0 35px 60px rgba(0, 0, 0, 0.18),
+    0 10px 20px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+
+  z-index: 10;
+  will-change: transform;
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.punch-hole {
+  position: absolute;
+
+  left: 50%;
+
+  top: 14px;
+
+  width: 14px;
+
+  height: 14px;
+
+  margin-left: -7px;
+
+  border-radius: 50%;
+
+  background: #111111;
+
+  box-shadow:
+    inset
+      0 2px 3px
+      rgba(0, 0, 0, 0.6);
+
+  z-index: 20;
+}
+
+
+.card-header {
+  position: relative;
+
+  height: 118px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #14161a 0%,
+      #202329 100%
+    );
+
+  color: #ffffff;
+}
+
+
+.card-header::before {
+  content: "";
+
+  position: absolute;
+
+  right: -90px;
+
+  top: -120px;
+
+  width: 220px;
+
+  height: 220px;
+
+  transform: rotate(38deg);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.09),
+      transparent
+    );
+}
+
+
+.brand {
+  position: absolute;
+
+  left: 22px;
+
+  top: 24px;
+
+  font-size: 17px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+
+.brand-sub {
+  position: absolute;
+
+  left: 23px;
+
+  top: 47px;
+
+  font-size: 9px;
+
+  letter-spacing: 1.2px;
+
+  opacity: 0.55;
+}
+
+
+.id-badge {
+  position: absolute;
+
+  right: 18px;
+
+  top: 20px;
+
+  width: 34px;
+
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.55);
+
+  border-radius: 50%;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile {
+  position: relative;
+
+  z-index: 5;
+
+  margin-top: -40px;
+
+  text-align: center;
+}
+
+
+.profile-photo {
+  width: 86px;
+
+  height: 86px;
+
+  margin: 0 auto;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border:
+    5px solid
+    #ffffff;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      150deg,
+      #f0f0f0,
+      #fbfbfb
+    );
+
+  color: #14161a;
+
+  font-size: 27px;
+
+  font-weight: 800;
+
+  box-shadow:
+    0 8px 16px
+    rgba(0, 0, 0, 0.18);
+}
+
+
+.profile-name {
+  margin-top: 14px;
+
+  color: #14161a;
+
+  font-size: 21px;
+
+  font-weight: 800;
+}
+
+
+.profile-role {
+  margin-top: 4px;
+
+  color: #8a8f98;
+
+  font-size: 10.5px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* =========================================================
+   CARD DETAILS
+========================================================= */
+
+.card-details {
+  margin-top: 18px;
+
+  padding: 0 26px;
+}
+
+
+.card-detail {
+  min-height: 36px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  border-bottom:
+    1px solid
+    #f0f0f2;
+
+  font-size: 11px;
+}
+
+
+.card-detail span:first-child {
+  color: #a4a8b0;
+}
+
+
+.card-detail span:last-child {
+  color: #14161a;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   CARD BOTTOM
+========================================================= */
+
+.card-bottom {
+  position: absolute;
+
+  left: 0;
+
+  right: 0;
+
+  bottom: 0;
+
+  height: 40px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #f7f7f8;
+
+  color: #9a9ea6;
+
+  font-size: 9.5px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.2px;
+}
+
+/* =========================================================
+   NEW PROFILE CARD UI
+========================================================= */
+
+.card-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 9px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #172033;
+  font-size: 8px;
+  font-weight: 600;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #16c784;
+}
+
+.card-image {
+  position: absolute;
+  inset: 0;
+  height: 235px;
+  overflow: hidden;
+  background: #e8e6e2;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+  user-select: none;
+  pointer-events: none;
+}
+
+.card-gradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 125px;
+  height: 145px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 18%,
+    rgba(255, 255, 255, 0.22) 28%,
+    rgba(255, 255, 255, 0.37) 38%,
+    rgba(255, 255, 255, 0.72) 61%,
+    rgba(255, 255, 255, 1.9) 75%,
+    #fff 100%
+  );
+}
+
+.card-content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  padding: 0 17px 15px;
+}
+
+.card-name {
+  margin: 0;
+  color: #101827;
+  font-size: 25px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -1.1px;
+}
+
+.card-role {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 7px;
+  color: #172033;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.role-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  color: #ff6b00;
+}
+
+.role-icon svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.card-accent {
+  width: 23px;
+  height: 3px;
+  margin-top: 8px;
+  border-radius: 10px;
+  background: #ff6b00;
+}
+
+.card-description {
+  margin: 8px 0 0;
+  max-width: 77%;
+  color: #596579;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.card-stats {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1fr;
+  margin-top: 13px;
+}
+
+.card-stat {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 0;
+  padding: 0 7px;
+  border-right: 1px solid #d9dde4;
+}
+
+.card-stat:first-child {
+  padding-left: 0;
+}
+
+.card-stat:last-child {
+  padding-right: 0;
+  border-right: none;
+}
+
+.stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  color: #18243a;
+}
+
+.stat-icon svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.card-stat strong {
+  display: block;
+  color: #111827;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.card-stat span {
+  display: block;
+  margin-top: 3px;
+  color: #657083;
+  font-size: 8px;
+  line-height: 1.2;
+}
+
+.card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin-top: 13px;
+}
+
+.card-button {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 8px;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.card-button:hover {
+  transform: translateY(-1px);
+}
+
+.card-button svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.card-button-primary {
+  justify-content: space-between;
+  padding: 0 18px;
+  background: #111b2e;
+  color: #ffffff;
+}
+
+.card-button-primary:hover {
+  background: #ff6b00;
+}
+
+.card-button-secondary {
+  border: 1px solid #d8dce2;
+  background: #ffffff;
+  color: #111827;
+}
+
+.card-button-secondary:hover {
+  border-color: #ff6b00;
+  background: #ff6b00;
+  color: #ffffff;
+}
+
+.card-button strong {
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.button-arrow {
+  width: 11px !important;
+  height: 11px !important;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .about-section {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .about-wrapper {
+    gap: 30px;
+  }
+
+  .about-content {
+    padding-top: 60px;
+  }
+
+  .about-title {
+    font-size: 52px;
+  }
+
+  .about-description {
+    font-size: 15px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 990px) {
+
+  .about-section {
+    min-height: 0;
+    max-height: none;
+    height: auto;
+    padding:
+      0px
+      20px
+      35px;
+
+    scroll-margin-top: 85px;
+  }
+
+
+  .about-wrapper {
+    min-height: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+
+  /*
+    MOBILE ORDER
+
+    1. ID CARD
+    2. ABOUT CONTENT
+  */
+
+  .card-area {
+    order: 1;
+
+    width: 100%;
+
+    min-height: 560px;
+  }
+
+
+  .about-content {
+    order: 2;
+
+    width: 100%;
+
+    padding-top: 0;
+  }
+
+
+  .scene {
+    transform: scale(0.86);
+
+    transform-origin:
+      top center;
+  }
+
+
+  .about-label {
+    margin-bottom: 14px;
+  }
+
+
+  .about-title {
+    font-size: 46px;
+
+    letter-spacing: -2px;
+
+    margin-bottom: 22px;
+  }
+
+
+  .about-description {
+    font-size: 15px;
+
+    line-height: 1.75;
+
+    margin-bottom: 22px;
+
+    max-width: none;
+  }
+
+
+  .about-details {
+    width: 100%;
+
+    max-width: none;
+
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+
+  .about-detail {
+    padding: 14px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 575px) {
+
+  .about-section {
+    scroll-margin-top: 72px;
+  }
+
+}
+
+
+@media (max-width: 430px) {
+
+  .about-section {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+
+  .card-area {
+    min-height: 530px;
+  }
+
+
+  .scene {
+    transform: scale(0.78);
+  }
+
+
+  .about-title {
+    font-size: 42px;
+  }
+
+
+  .about-description {
+    font-size: 14px;
+  }
+
+}
+
+/* =========================================================
+   DRAG HINT
+   (Moved here from an inline <style> tag in About.jsx)
+========================================================= */
+
+.about-drag-hint {
+  position: absolute;
+  top: 575px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 7px 11px;
+  border: 1px solid rgba(255, 107, 0, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.10);
+  color: #172033;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.55px;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  animation: aboutDragHintFloat 1.5s ease-in-out infinite;
+}
+
+.about-drag-hint-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff6b00;
+  font-size: 14px;
+  line-height: 1;
+  animation: aboutDragHintMove 1.05s ease-in-out infinite;
+}
+
+.about-drag-hint.is-hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateX(-50%) translateY(-5px);
+  animation: none;
+}
+
+@keyframes aboutDragHintFloat {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-3px); }
+}
+
+@keyframes aboutDragHintMove {
+  0%, 100% { transform: translateX(-3px); }
+  50% { transform: translateX(4px); }
+}
+
+@media (max-width: 575px) {
+  .about-drag-hint {
+    top: 580px;
+    padding: 6px 10px;
+    font-size: 8px;
+  }
+
+  .about-drag-hint-icon {
+    font-size: 13px;
+  }
+}
