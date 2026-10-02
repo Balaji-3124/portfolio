@@ -1156,7 +1156,7 @@ function About() {
           </svg>
         </div>
         <div>
-          <strong>5+</strong>
+          <strong>4+</strong>
           <span>Projects</span>
         </div>
       </div>

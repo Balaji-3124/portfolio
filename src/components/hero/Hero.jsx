@@ -55,7 +55,7 @@ function Hero() {
         >
           <div className="hero-stat-light">
             <div className="hero-num">
-              6<sup>+</sup>
+              4<sup>+</sup>
             </div>
 
             <p>Live production projects</p>
@@ -66,7 +66,7 @@ function Hero() {
               100<sup>%</sup>
             </div>
 
-            <p>Client satisfaction &amp; scalability</p>
+            <p>Scalable &amp; user-focused</p>
           </div>
         </section>
       </div>
