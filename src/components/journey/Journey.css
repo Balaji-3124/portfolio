@@ -1384,7 +1384,7 @@
   }
 
   .journey-detail-card { --card-h: 380px; }
-  .detail-media{ height: var(--card-h/1.5); }
+  .detail-media{ height: calc(var(--card-h) / 1.5); }
   .detail-media-text { left: 16px; right: 16px; bottom: 10px; }
   .detail-body  { 
     /* background-color: #4eaf68; */
@@ -1464,7 +1464,7 @@
   }
 
   .journey-detail-card { --card-h: 380px; }
-  .detail-media{ height: var(--card-h/1.5); }
+  .detail-media{ height: calc(var(--card-h) / 1.5); }
   .detail-body  { padding: 12px 14px 12px; }
 
   .journey-detail-card h3 {
