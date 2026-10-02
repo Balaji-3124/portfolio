@@ -13,6 +13,7 @@ import "./Journey.css";
 const journeyData = [
   {
     id: "diploma",
+    image: "/journey/stage-one.jpg",
     year: "2020 — Jun 2022",
     title: "Diploma in EEE",
     subtitle: "The beginning",
@@ -22,6 +23,7 @@ const journeyData = [
   },
   {
     id: "work",
+    image: "/journey/stage-two.jpg",
     year: "Jul 2022 — Jul 2023",
     title: "Work Experience",
     subtitle: "Real-world exposure",
@@ -31,6 +33,7 @@ const journeyData = [
   },
   {
     id: "be",
+    image: "/journey/stage-three.jpg",
     year: "Aug 2023 — Jun 2026",
     title: "B.E. Computer Science",
     subtitle: "A new direction",
@@ -40,6 +43,7 @@ const journeyData = [
   },
   {
     id: "events",
+    image: "/journey/stage-four.jpg",
     year: "2024",
     title: "Technical Events",
     subtitle: "Learning beyond the classroom",
@@ -49,6 +53,7 @@ const journeyData = [
   },
   {
     id: "appin",
+    image: "/journey/stage-five.jpg",
     year: "Jul 2025 — Aug 2025",
     title: "Appin Technology",
     subtitle: "Practical training",
@@ -58,6 +63,7 @@ const journeyData = [
   },
   {
     id: "qspiders",
+    image: "/journey/stage-six.jpg",
     year: "2026 — Now",
     title: "QSpiders",
     subtitle: "Strengthening the foundation",
@@ -113,30 +119,38 @@ const CAR_MODEL_URL = "/models/car.glb";
 // modeled/exported.
 const CAR_LENGTH_UNITS = 4.91;
 
-// Desired on-screen length (px) of the car at each breakpoint,
-// matched to the old bike icon's sizing steps.
-const CAR_SCREEN_LENGTHS = [
-  { maxWidth: 480, length: 46 },
-  { maxWidth: 768, length: 56 },
-  { maxWidth: 1100, length: 68 },
-  { maxWidth: Infinity, length: 82 },
-];
+// Desired on-screen length (px) of the car on desktop.
+const CAR_DESKTOP_LENGTH = 82;
 
-function getCarScale() {
+// Widest viewport that uses the compact (medium/mobile) layouts.
+// Keep in sync with the 1200px breakpoint in Journey.css.
+const COMPACT_MAX_WIDTH = 1200;
+
+// On compact layouts the car is sized from the road width, so
+// the smaller the screen, the smaller the car.
+const CAR_ROAD_RATIO = 0.09;
+const CAR_MIN_LENGTH = 22;
+const CAR_MAX_LENGTH = 60;
+
+function getCarScale(roadWidth) {
   const width =
     typeof window !== "undefined"
       ? window.innerWidth
       : 1400;
 
-  const match =
-    CAR_SCREEN_LENGTHS.find(
-      (entry) => width <= entry.maxWidth
-    ) ||
-    CAR_SCREEN_LENGTHS[
-      CAR_SCREEN_LENGTHS.length - 1
-    ];
+  let length = CAR_DESKTOP_LENGTH;
 
-  return match.length / CAR_LENGTH_UNITS;
+  if (width <= COMPACT_MAX_WIDTH && roadWidth) {
+    length = Math.min(
+      CAR_MAX_LENGTH,
+      Math.max(
+        CAR_MIN_LENGTH,
+        roadWidth * CAR_ROAD_RATIO
+      )
+    );
+  }
+
+  return length / CAR_LENGTH_UNITS;
 }
 
 // How long the car waits at a stage before auto-advancing to
@@ -167,6 +181,14 @@ function Journey() {
   const isInitialCarRender = useRef(true);
 
   const active = journeyData[activeIndex];
+
+  useEffect(() => {
+    journeyData.forEach((item) => {
+      const img = new Image();
+      img.src = item.image;
+    });
+  }, []);
+
 
   const getPathScale = () => {
     const container = roadContainerRef.current;
@@ -490,7 +512,7 @@ function Journey() {
 
       if (threeRef.current.car) {
         threeRef.current.car.scale.setScalar(
-          getCarScale()
+          getCarScale(container.clientWidth)
         );
       }
 
@@ -506,7 +528,7 @@ function Journey() {
       (gltf) => {
         const car = gltf.scene;
 
-        car.scale.setScalar(getCarScale());
+        car.scale.setScalar(getCarScale(container.clientWidth));
 
         threeRef.current.car = car;
 
@@ -777,27 +799,45 @@ function Journey() {
               key={active.id}
             >
 
-              <div className="detail-top">
+              <div className="detail-media">
 
-                <div className="detail-year">
-                  {active.year}
+                <img
+                  src={active.image}
+                  alt={active.title}
+                  className="detail-image"
+                />
+
+                <div className="detail-media-fade"></div>
+
+                <div className="detail-media-text">
+
+                  <div className="detail-subtitle">
+                    {active.subtitle}
+                  </div>
+
+                  <h3>
+                    {active.title}
+                  </h3>
+
                 </div>
 
-                <div className="detail-counter">
-                  {String(activeIndex + 1).padStart(2, "0")}
-                  {" / "}
-                  {String(journeyData.length).padStart(2, "0")}
+                <div className="detail-top">
+
+                  <div className="detail-year">
+                    {active.year}
+                  </div>
+
+                  <div className="detail-counter">
+                    {String(activeIndex + 1).padStart(2, "0")}
+                    {" / "}
+                    {String(journeyData.length).padStart(2, "0")}
+                  </div>
+
                 </div>
 
               </div>
 
-              <div className="detail-subtitle">
-                {active.subtitle}
-              </div>
-
-              <h3>
-                {active.title}
-              </h3>
+              <div className="detail-body">
 
               <div className="detail-line"></div>
 
@@ -838,6 +878,8 @@ function Journey() {
                   </button>
 
                 </div>
+
+              </div>
 
               </div>
 

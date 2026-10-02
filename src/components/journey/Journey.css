@@ -712,21 +712,6 @@
   .signal-message-right { left: 21px; }
 }
 
-@media (max-width: 768px) {
-  .signal-message { width: 160px; min-height: 70px; padding: 10px 11px; border-radius: 16px; }
-  .signal-message small { font-size: 7.5px; }
-  .signal-message strong { font-size: 10.5px; }
-  .signal-message > span:not(.signal-message-gloss) { font-size: 7.5px; }
-  .signal-message-left { right: 18px; }
-  .signal-message-right { left: 18px; }
-}
-
-@media (max-width: 480px) {
-  .signal-message { width: 135px; min-height: 62px; padding: 8px 9px; border-radius: 14px; }
-  .signal-message small { font-size: 6.5px; }
-  .signal-message strong { font-size: 9px; }
-  .signal-message > span:not(.signal-message-gloss) { font-size: 6.5px; }
-}
 
 
 /* =========================================================
@@ -765,31 +750,91 @@
 
 .journey-detail-card {
   position: relative;
+  top: 30px;
   right: -80px;
-  padding: 26px;
+  padding: 0;
 
-  border:
-    1px solid
-    var(--jb-line);
-
+  border: 1px solid var(--jb-line);
   border-radius: 20px;
 
-  background:
-    rgba(255, 253, 248, 0.94);
+  --card-h: 460px;          /* image = 50% of this */
+  min-height: var(--card-h);
+
+  background: #fffdf8;
+  overflow: hidden;
+  isolation: isolate;
 
   box-shadow:
-    0 24px 60px
-      rgba(50, 43, 35, 0.13),
-    inset 0 1px 0
-      rgba(255, 255, 255, 0.7);
-
-  backdrop-filter: blur(18px);
+    0 24px 60px rgba(50, 43, 35, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
 
   animation:
     journeyDetailIn
     0.4s
     cubic-bezier(0.2, 0.7, 0.2, 1)
     both;
+}
+
+/* Photo on top (sharp), text on a clean solid body below */
+.detail-media {
+  position: relative;
+  height: calc(var(--card-h) / 2);
+  overflow: hidden;
+  background: #e9e2d6;
+}
+
+.detail-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.02);
+  animation: journeyImageIn 0.9s ease both;
+}
+
+.detail-media-fade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(20, 16, 10, 0.5) 0%,
+      rgba(20, 16, 10, 0.05) 35%,
+      rgba(20, 16, 10, 0.2) 55%,
+      rgba(20, 16, 10, 0.82) 100%
+    );
+}
+
+/* Subtitle + title sit on top of the image */
+.detail-media-text {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 16px;
+  z-index: 2;
+}
+
+.detail-media .detail-subtitle {
+  margin-bottom: 5px;
+  color: #ffcf8f;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+}
+
+.journey-detail-card .detail-media h3 {
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+}
+
+.detail-body {
+  position: relative;
+  padding: 5px 18px 26px 22px;
+}
+
+@keyframes journeyImageIn {
+  from { opacity: 0; transform: scale(1.08); }
+  to   { opacity: 1; transform: scale(1.02); }
 }
 
 
@@ -815,13 +860,15 @@
 ========================================================= */
 
 .detail-top {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 14px;
+  right: 14px;
+
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
-  margin-bottom: 20px;
 }
 
 
@@ -830,21 +877,33 @@
 
   font-style: italic;
 
-  font-size: 14px;
+  font-size: 12.5px;
 
-  font-weight: 400;
+  font-weight: 500;
 
-  color: var(--jb-amber);
+  padding: 4px 11px;
+  border-radius: 30px;
+
+  background: rgba(255, 253, 248, 0.92);
+  color: #b86a14;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 
 .detail-counter {
   font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 
   font-variant-numeric:
     tabular-nums;
 
-  color: var(--jb-ink-faint);
+  padding: 4px 9px;
+  border-radius: 30px;
+
+  background: rgba(20, 16, 10, 0.55);
+  color: #fff;
 }
 
 
@@ -853,11 +912,14 @@
 ========================================================= */
 
 .detail-subtitle {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 
-  font-size: 11px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 
-  color: var(--jb-ink-dim);
+  color: var(--jb-amber);
 }
 
 
@@ -901,7 +963,7 @@
 
   line-height: 1.7;
 
-  color: var(--jb-ink-dim);
+  color: #4a443b;
 }
 
 
@@ -1105,221 +1167,504 @@
 
 
 /* =========================================================
-   MOBILE
+   MOBILE  (<= 780px)  — desktop untouched
+
+   - No fixed / max height: section and main grow with content
+   - Everything scaled down
+   - Signal messages are compact pills (title only); full text
+     lives in the detail card
+   - Signal scale is driven by --s, and the message is
+     counter-scaled (1 / --s) so text stays readable
 ========================================================= */
 
-@media (max-width: 768px) {
+@media (max-width: 780px) {
+
+  /* undo the desktop-only bits that the old 1100px block handled */
+  .journey-wrapper {
+    transform: none;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .journey-intro {
+    position: relative;
+    top: auto;
+    left: auto;
+  }
 
   .journey-section {
-    min-height: auto;
-
-    padding:
-      70px 20px 80px;
-
+    height: auto;
+    min-height: 0;
+    display: block;
+    padding: 56px 16px 36px;
     scroll-margin-top: 85px;
   }
 
-
   .journey-intro {
-    margin-bottom: 25px;
+    margin-bottom: 14px;
   }
-
 
   .journey-small-title {
-    font-size: 11px;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding: 4px 10px 4px 8px;
+    font-size: 10px;
   }
 
+  .journey-small-title span {
+    width: 5px;
+    height: 5px;
+  }
 
   .journey-intro h2 {
-    font-size: 50px;
+    font-size: 38px;
   }
-
 
   .journey-intro p {
-    margin-top: 17px;
-
-    font-size: 12px;
+    margin-top: 10px;
+    font-size: 11px;
+    line-height: 1.55;
   }
 
-
+  /* MAIN: height comes from padding-top (a % of width), so it
+     always equals the road's height — no fixed px anywhere. */
   .journey-main {
-    /* Road height now always equals its own (95vw-ish) width
-       via aspect-ratio below, so this has to grow with it
-       instead of using one fixed number for every phone
-       size. ~340px covers the detail card + gap beneath it. */
-    min-height: calc(95vw + 340px);
+    min-height: 0;
+    margin-top: 22px;
+    padding-top: 80%;
   }
 
-
-  /* ROAD
-     aspect-ratio keeps height equal to width at every screen
-     size, so the square (700×700) road SVG never gets
-     stretched or squished — it did when height was a fixed
-     px value paired with a % width. */
-
+  /* ROAD (80% wide, square) */
   .journey-road-container {
     top: 0;
-
-    left: 5%;
-
-    width: 95%;
-
+    left: 14%;
+    width: 80%;
     height: auto;
-
     aspect-ratio: 1 / 1;
   }
 
-
-  .road-shadow {
-    stroke-width: 82;
-  }
-
-
-  .road {
-    stroke-width: 68;
-  }
-
+  .road-shadow { stroke-width: 66; }
+  .road        { stroke-width: 56; }
 
   .road-center {
-    stroke-width: 2.2;
-
-    stroke-dasharray: 12 12;
+    stroke-width: 2;
+    stroke-dasharray: 10 10;
   }
-
 
   /* SIGNAL */
-
   .journey-signal {
+    --s: 0.66;
     width: 26px;
-
     height: 76px;
-
-    transform:
-      translate(-50%, -100%)
-      scale(0.82);
+    transform: translate(-50%, -100%) scale(var(--s));
+    transform-origin: 50% 100%;
   }
-
 
   .journey-signal.active {
-    transform:
-      translate(-50%, -100%)
-      scale(0.92);
+    --s: 0.76;
+    transform: translate(-50%, -100%) scale(var(--s));
   }
-
 
   .signal-body {
     width: 23px;
-
     height: 55px;
   }
 
-
   .signal-light {
     width: 8px;
-
     height: 8px;
-
     flex-basis: 8px;
   }
 
-
   .signal-pole {
     top: 54px;
-
     height: 19px;
   }
 
-
-  /* DETAIL */
-
-  .journey-detail {
-    position: absolute;
-
-    left: 0;
-
-    right: 0;
-
-    bottom: 0;
-
-    width: 100%;
+  /* SIGNAL MESSAGE — compact pill, title only */
+  .signal-message {
+    width: 80px;
+    min-height: 0;
+    padding: 6px 8px;
+    border-radius: 10px;
+    gap: 0;
   }
 
+  .signal-message small,
+  .signal-message > span:not(.signal-message-gloss) {
+    display: none;
+  }
+
+  .signal-message strong {
+    font-size: 9.5px;
+    line-height: 1.2;
+  }
+
+  .signal-message-gloss {
+    top: 3px;
+    left: 6px;
+    right: 6px;
+    height: 14px;
+    border-radius: 8px;
+  }
+
+  .signal-message-left {
+    left: auto;
+    right: calc(13px + 20px / var(--s));
+    transform: translateY(-50%) scale(calc(1 / var(--s)));
+    transform-origin: 100% 50%;
+  }
+
+  .signal-message-right {
+    right: auto;
+    left: calc(13px + 20px / var(--s));
+    transform: translateY(-50%) scale(calc(1 / var(--s)));
+    transform-origin: 0 50%;
+  }
+
+  .signal-message-left::after {
+    right: -12px;
+    border-top-width: 7px;
+    border-bottom-width: 7px;
+    border-left-width: 12px;
+  }
+
+  .signal-message-right::after {
+    left: -12px;
+    border-top-width: 7px;
+    border-bottom-width: 7px;
+    border-right-width: 12px;
+  }
+
+  /* First & last pills would run off-screen, so flip them
+     to the other side of their signal. */
+  .journey-signal:nth-child(1) .signal-message-left {
+    right: auto;
+    left: calc(13px + 20px / var(--s));
+    transform-origin: 0 50%;
+  }
+
+  .journey-signal:nth-child(1) .signal-message-left::after {
+    right: auto;
+    left: -12px;
+    border-left: 0;
+    border-right: 12px solid rgba(255, 255, 255, 0.97);
+    filter: drop-shadow(-2px 2px 2px rgba(50, 43, 35, 0.14));
+  }
+
+  .journey-signal:nth-child(6) .signal-message-right {
+    left: auto;
+    right: calc(13px + 20px / var(--s));
+    transform-origin: 100% 50%;
+  }
+
+  .journey-signal:nth-child(6) .signal-message-right::after {
+    left: auto;
+    right: -12px;
+    border-right: 0;
+    border-left: 12px solid rgba(255, 255, 255, 0.97);
+    filter: drop-shadow(2px 2px 2px rgba(50, 43, 35, 0.14));
+  }
+
+  /* DETAIL CARD — sits below the road in normal flow, so its
+     height is whatever the content needs. */
+  .journey-detail {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    margin-top: 6px;
+  }
 
   .journey-detail-card {
-    padding: 22px;
+    right: 0;               /* desktop has right:-80px, which pushed the card off-screen */
+    padding: 0;
+    border-radius: 14px;
   }
 
+  .journey-detail-card { --card-h: 330px; }
+  .detail-media-text { left: 16px; right: 16px; bottom: 10px; }
+  .detail-body  { padding: 12px 16px 14px; }
+  .detail-top   { top: 8px; left: 10px; right: 10px; }
+
+  .detail-year       { font-size: 12px; }
+  .detail-counter    { font-size: 9px; }
+  .detail-subtitle   { margin-bottom: 4px; font-size: 10px; }
 
   .journey-detail-card h3 {
-    font-size: 27px;
+    font-size: 20px;
   }
 
+  .detail-line {
+    width: 24px;
+    margin: 10px 0;
+  }
 
   .journey-detail-card p {
-    font-size: 12px;
+    font-size: 11.5px;
+    line-height: 1.55;
+  }
+
+  .detail-tags {
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .detail-tags span {
+    padding: 4px 8px;
+    font-size: 9px;
+  }
+
+  .detail-bottom {
+    margin-top: 12px;
+    padding-top: 10px;
+  }
+
+  .detail-bottom > span {
+    font-size: 10px;
+  }
+
+  .detail-arrows button {
+    width: 26px;
+    height: 26px;
   }
 }
 
 
 /* =========================================================
-   SMALL MOBILE
+   SMALL MOBILE  (<= 480px)
 ========================================================= */
 
 @media (max-width: 480px) {
 
   .journey-section {
-    padding-top: 60px;
+    padding: 50px 14px 30px;
   }
-
 
   .journey-intro h2 {
-    font-size: 44px;
+    font-size: 34px;
   }
 
+  .journey-signal        { --s: 0.62; }
+  .journey-signal.active { --s: 0.72; }
 
-  .journey-main {
-    /* Same reasoning as the 768px breakpoint: road height
-       tracks its own 100vw-ish width now. */
-    min-height: calc(100vw + 320px);
+  .signal-message {
+    width: 76px;
+    padding: 5px 7px;
   }
 
-
-  .journey-road-container {
-    left: 0;
-
-    width: 100%;
-
-    height: auto;
-
-    aspect-ratio: 1 / 1;
+  .signal-message strong {
+    font-size: 9px;
   }
 
-
-  .journey-detail-card {
-    padding: 20px;
-  }
-
+  .journey-detail-card { --card-h: 310px; }
+  .detail-body  { padding: 12px 14px 12px; }
 
   .journey-detail-card h3 {
-    font-size: 24px;
+    font-size: 18px;
   }
 
+  .journey-detail-card p {
+    font-size: 11px;
+  }
 
   .detail-bottom > span {
     display: none;
   }
+}
+/* =========================================================
+   MEDIUM  (781px – 1200px)  — tablet / small laptop
 
+   Same stacked layout as mobile, but everything is sized
+   in between: bigger than mobile, smaller than desktop.
+   Messages show year + title + subtitle again.
+========================================================= */
 
-  .journey-signal {
-    transform:
-      translate(-50%, -100%)
-      scale(0.72);
+@media (min-width: 781px) and (max-width: 1200px) {
+
+  .journey-wrapper {
+    transform: none;
+    max-width: 760px;
+    margin: 0 auto;
   }
 
+  .journey-section {
+    height: auto;
+    min-height: 0;
+    display: block;
+    padding: 70px 4vw 50px;
+    scroll-margin-top: 88px;
+  }
+
+  .journey-intro {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-bottom: 24px;
+  }
+
+  .journey-small-title {
+    margin-bottom: 14px;
+    font-size: 12px;
+  }
+
+  .journey-intro h2 {
+    font-size: 56px;
+  }
+
+  .journey-intro p {
+    margin-top: 14px;
+    font-size: 13px;
+  }
+
+  .journey-main {
+    min-height: 0;
+    margin-top: 28px;
+    padding-top: 80%;
+  }
+
+  .journey-road-container {
+    top: 0;
+    left: 14%;
+    width: 80%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .road-shadow { stroke-width: 88; }
+  .road        { stroke-width: 74; }
+
+  .road-center {
+    stroke-width: 2.4;
+    stroke-dasharray: 14 14;
+  }
+
+  /* SIGNAL */
+  .journey-signal {
+    --s: 0.88;
+    width: 30px;
+    height: 86px;
+    transform: translate(-50%, -100%) scale(var(--s));
+    transform-origin: 50% 100%;
+  }
 
   .journey-signal.active {
-    transform:
-      translate(-50%, -100%)
-      scale(0.82);
+    --s: 1;
+    transform: translate(-50%, -100%) scale(var(--s));
   }
+
+  /* SIGNAL MESSAGE */
+  .signal-message {
+    width: 170px;
+    min-height: 70px;
+    padding: 10px 12px;
+    border-radius: 16px;
+    gap: 3px;
+  }
+
+  .signal-message small { font-size: 8px; }
+  .signal-message strong { font-size: 12px; }
+  .signal-message > span:not(.signal-message-gloss) { font-size: 8.5px; }
+
+  .signal-message-left {
+    left: auto;
+    right: calc(13px + 16px / var(--s));
+    transform: translateY(-50%) scale(calc(1 / var(--s)));
+    transform-origin: 100% 50%;
+  }
+
+  .signal-message-right {
+    right: auto;
+    left: calc(13px + 16px / var(--s));
+    transform: translateY(-50%) scale(calc(1 / var(--s)));
+    transform-origin: 0 50%;
+  }
+
+  .signal-message-left::after {
+    right: -16px;
+    border-top-width: 8px;
+    border-bottom-width: 8px;
+    border-left-width: 16px;
+  }
+
+  .signal-message-right::after {
+    left: -16px;
+    border-top-width: 8px;
+    border-bottom-width: 8px;
+    border-right-width: 16px;
+  }
+
+  /* First & last messages flip so they stay on screen */
+  .journey-signal:nth-child(1) .signal-message-left {
+    right: auto;
+    left: calc(13px + 16px / var(--s));
+    transform-origin: 0 50%;
+  }
+
+  .journey-signal:nth-child(1) .signal-message-left::after {
+    right: auto;
+    left: -16px;
+    border-left: 0;
+    border-right: 16px solid rgba(255, 255, 255, 0.97);
+    filter: drop-shadow(-2px 2px 2px rgba(50, 43, 35, 0.14));
+  }
+
+  .journey-signal:nth-child(6) .signal-message-right {
+    left: auto;
+    right: calc(13px + 16px / var(--s));
+    transform-origin: 100% 50%;
+  }
+
+  .journey-signal:nth-child(6) .signal-message-right::after {
+    left: auto;
+    right: -16px;
+    border-right: 0;
+    border-left: 16px solid rgba(255, 255, 255, 0.97);
+    filter: drop-shadow(2px 2px 2px rgba(50, 43, 35, 0.14));
+  }
+
+  /* DETAIL CARD — below the road, height follows content */
+  .journey-detail {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .journey-detail-card {
+    right: 0;
+    padding: 0;
+    border-radius: 18px;
+  }
+
+  .journey-detail-card { --card-h: 400px; }
+  .detail-media-text { left: 24px; right: 24px; bottom: 14px; }
+  .detail-body  { padding: 16px 24px 20px; }
+
+  .journey-detail-card h3 { font-size: 24px; }
+
+  .detail-line { margin: 14px 0; }
+
+  .journey-detail-card p {
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .detail-tags { margin-top: 14px; }
+
+  .detail-bottom {
+    margin-top: 16px;
+    padding-top: 12px;
+  }
+}
+
+
+/* Tags sit on top of the stage image */
+.journey-detail-card .detail-tags span {
+  background: rgba(255, 159, 64, 0.1);
+  border-color: rgba(255, 159, 64, 0.35);
+  color: #8a5412;
 }
