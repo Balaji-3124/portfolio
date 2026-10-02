@@ -63,7 +63,7 @@ function Hero() {
 
           <div className="hero-stat-dark">
             <div className="hero-num">
-              100<sup>%</sup>
+              100 %
             </div>
 
             <p>Scalable &amp; user-focused</p>

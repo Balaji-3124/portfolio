@@ -1125,11 +1125,12 @@
 
     width: 100%;
 
-    min-height: 500px;
+    min-height: 560px;
   }
 
 
   .about-content {
+    margin-top: -100px;
     order: 2;
 
     width: 100%;
@@ -1211,7 +1212,7 @@
 
 
   .card-area {
-    min-height: 480px;
+    min-height: 530px;
   }
 
 
