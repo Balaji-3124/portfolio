@@ -1140,6 +1140,12 @@
 
 
   .scene {
+    /* Keep the scene at its true 430px design width so the clip (px-positioned)
+       stays aligned with the SVG ropes and the centered card. Scale does the fitting. */
+    width: 430px;
+    max-width: none;
+    flex-shrink: 0;
+
     transform: scale(0.86);
 
     transform-origin:
