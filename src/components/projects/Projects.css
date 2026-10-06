@@ -200,6 +200,37 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
+/* Screenshot fills the whole thumbnail */
+.project-thumb {
+  overflow: hidden;
+}
+
+.project-thumb-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* With a screenshot, the number becomes a small corner badge */
+.project-thumb.has-image .project-number {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 1;
+  padding: 5px 11px;
+  border-radius: 30px;
+  background: rgba(17, 17, 17, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+
 /* =========================================================
    BODY
 ========================================================= */
@@ -329,6 +360,15 @@
     font-size: 56px;
   }
 
+  .project-thumb.has-image {
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+  }
+
+  .project-thumb.has-image .project-number {
+    font-size: 12px;
+  }
+
   .project-body {
     padding: 26px 22px 28px;
   }
@@ -348,6 +388,7 @@
   .projects-section {
     padding-left: 15px;
     padding-right: 15px;
+      scroll-margin-top: 72px;
   }
 
   .project-links {

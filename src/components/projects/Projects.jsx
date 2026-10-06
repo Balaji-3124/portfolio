@@ -2,9 +2,20 @@ import { useEffect, useRef, useState } from "react";
 import "./Projects.css";
 
 /* =========================================================
+   PROJECT IMAGES
+   1. Put screenshots in src/assets (e.g. project1.png)
+   2. Import them here, then use them as `image` below.
+   (Uncomment once the files really exist, otherwise the build fails.)
+========================================================= */
+
+// import project1Img from "../../assets/project1.png";
+// import project2Img from "../../assets/project2.png";
+
+/* =========================================================
    PROJECT DATA
    Duplicate this shape for each real project (keep 4-6).
-   Replace `gradient` with a real screenshot later.
+   `image` is optional. If it is set, the screenshot is shown;
+   if not, the `gradient` is used as a fallback.
 ========================================================= */
 
 const projects = [
@@ -14,6 +25,7 @@ const projects = [
     description:
       "Short summary of what this project does and the problem it solves. Mention your role and the outcome.",
     tags: ["Django", "REST API", "PostgreSQL"],
+    // image: project1Img,
     gradient: "linear-gradient(135deg, #ff4d00 0%, #ff9f40 100%)",
     github: "#",
     live: "#",
@@ -24,6 +36,7 @@ const projects = [
     description:
       "Short summary of what this project does and the problem it solves. Mention your role and the outcome.",
     tags: ["React", "Tailwind CSS", "Node.js"],
+    // image: project2Img,
     gradient: "linear-gradient(135deg, #2b2b2b 0%, #6b6b6b 100%)",
     github: "#",
     live: "#",
@@ -95,9 +108,17 @@ function ProjectRow({ project, index }) {
         className={`project-card reveal-${side} ${visible ? "is-visible" : ""}`}
       >
         <div
-          className="project-thumb"
-          style={{ background: project.gradient }}
+          className={`project-thumb ${project.image ? "has-image" : ""}`}
+          style={!project.image ? { background: project.gradient } : undefined}
         >
+          {project.image && (
+            <img
+              src={project.image}
+              alt={`${project.title} screenshot`}
+              className="project-thumb-img"
+              loading="lazy"
+            />
+          )}
           <span className="project-number">
             {String(index + 1).padStart(2, "0")}
           </span>
